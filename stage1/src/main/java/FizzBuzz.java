@@ -1,41 +1,70 @@
 public class FizzBuzz {
-    String result = "";
-    Integer number;
+    String answer;
+    AskedNumber askedNumber;
 
     public String evaluate(Integer number) throws NumberNotInValidRangeException {
-        this.number = number;
+        answer = "";
+        askedNumber= new AskedNumber(number);
         verifyNumberInRange();
-        appendFizzIfMatches();
-        appendBuzzIfMatches();
-        if (result.isEmpty()) {
-            return this.number.toString();
-        } else {
-            return result;
-        }
+        sayFizzIfMatches();
+        sayBuzzIfMatches();
+        sayNumberIfNoMatch();
+        return answer;
     }
 
     private void verifyNumberInRange() throws NumberNotInValidRangeException {
-        if ((this.number < 1) || (this.number > 100)) {
+        if (askedNumber.isNotInRange(1, 100)) {
             throw new NumberNotInValidRangeException();
         }
     }
 
-    private void appendFizzIfMatches() {
-        if (isDivisibleBy(3)) {
-            result += "fizz";
+    private void sayFizzIfMatches() {
+        if (askedNumber.isDivisibleBy(3)) {
+            say("fizz");
         }
     }
 
-    private void appendBuzzIfMatches() {
-        if (isDivisibleBy(5)) {
-            result += "buzz";
+    private void sayBuzzIfMatches() {
+        if (askedNumber.isDivisibleBy(5)) {
+            say("buzz");
         }
     }
 
-    private boolean isDivisibleBy(int divisor) {
-        return this.number % divisor == 0;
+    private void sayNumberIfNoMatch() {
+        if (answer.isEmpty()) {
+            answer = askedNumber.toString();
+        }
+    }
+
+    private void say(String word) {
+        answer += word;
     }
 
     public class NumberNotInValidRangeException extends Exception {
+    }
+}
+
+class AskedNumber {
+
+    Integer value;
+
+    public AskedNumber(Integer value) {
+        this.value = value;
+    }
+
+    public boolean isDivisibleBy(int divisor) {
+        return (this.value % divisor == 0);
+    }
+
+    public boolean isNotInRange(int minValue, int maxValue) {
+        return !isInRange(minValue, maxValue);
+    }
+
+    public boolean isInRange(int minValue, int maxValue) {
+        return ((this.value >= minValue) && (this.value <= maxValue));
+    }
+
+    public String toString() {
+        return this.value.toString();
     }
 }
