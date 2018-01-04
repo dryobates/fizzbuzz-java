@@ -6,9 +6,8 @@ public class FizzBuzz {
         answer = "";
         askedNumber= new AskedNumber(number);
         verifyNumberInRange();
-        sayFizzIfMatches();
-        sayBuzzIfMatches();
-        sayNumberIfNoMatch();
+        sayWordIfMatches();
+        sayNumberOtherwise();
         return answer;
     }
 
@@ -18,26 +17,31 @@ public class FizzBuzz {
         }
     }
 
-    private void sayFizzIfMatches() {
+    private void sayWordIfMatches() {
+        sayFizzPartIfMatches();
+        sayBuzzPartIfMatches();
+    }
+
+    private void sayFizzPartIfMatches() {
         if (askedNumber.isDivisibleBy(3)) {
             say("fizz");
         }
     }
 
-    private void sayBuzzIfMatches() {
+    private void sayBuzzPartIfMatches() {
         if (askedNumber.isDivisibleBy(5)) {
             say("buzz");
         }
     }
 
-    private void sayNumberIfNoMatch() {
+    private void say(String word) {
+        answer += word;
+    }
+
+    private void sayNumberOtherwise() {
         if (answer.isEmpty()) {
             answer = askedNumber.toString();
         }
-    }
-
-    private void say(String word) {
-        answer += word;
     }
 
     public class NumberNotInValidRangeException extends Exception {
